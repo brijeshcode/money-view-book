@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\ExpensesController;
+use App\Http\Controllers\CategortiesController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +18,16 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+
+Route::post('expense', [ExpensesController::class, 'store']);
+Route::get('expense', [ExpensesController::class, 'index']);
+Route::get('expense-total', [ExpensesController::class, 'expenseTotal']);
+
+// Route::get('expense/categories/create', [CategortiesController::class, 'create']);
+
+Route::get('categories', [CategortiesController::class, 'index']);
+Route::get('categories/recent-used', [CategortiesController::class, 'latestUsed']);
+
+Route::get('categories/expenses', [CategortiesController::class, 'expense']);
+Route::post('categories', [CategortiesController::class, 'create']);
