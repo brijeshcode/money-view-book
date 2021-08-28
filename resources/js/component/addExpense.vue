@@ -47,14 +47,14 @@
                         <spam class="help is-danger" v-if="form.errors.has('category_id')" v-text="form.errors.get('category_id')"></spam>
                         <div class=" columns is-multiline has-icons-left">
 
-                            <div class="categories column is-3 "
+                            <div class="categories column "
                                 v-for="category in categories"
                                 v-on:click="categorySelected(category.id)"
                                 >
                                 <div class="category-icon"
                                 v-bind:style="{background: category.color}"
                                 >
-                                    <i v-if="category.icon_type == 'fontawesome'" v-bind:class="category.class_or_path" class="category-icon" style="margin-left: 5px;"></i>
+                                    <i v-if="category.icon_type == 'fontawesome'" v-bind:class="category.class_or_path"></i>
                                     <span v-if="category.icon_type == 'character'" v-text="category.name.charAt(0)"></span>
 
                                 </div>

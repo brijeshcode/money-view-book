@@ -6,13 +6,13 @@
         <div class="columns">
             <div class="column">
                 <div class="columns">
-                    <div class="column is-6">
+                    <div class="column is-8">
                         <expense-transactions ></expense-transactions>
                     </div>
 
-                    <div class="column is-6">
+                    <!-- <div class="column is-6">
                         <add-expense></add-expense>
-					</div>
+					</div> -->
 				</div>
             </div>
         </div>

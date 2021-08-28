@@ -5,33 +5,14 @@
         v-for="category in categories"
         v-on:click="categorySelected(category.id)"
         >
-            <expense-icon :category="category" :text="text"></expense-icon>
+        <expense-icon :category="category" :text="text"></expense-icon>
     </div>
     </div>
 </template>
 <style>
-    .categories {
-        text-align: center;
-        /*margin-left: 5px;*/
-        cursor: pointer;
-        margin-bottom: 5px;
-    }
 
-    .is-selected {
-        border: 5px solid gainsboro;
-        width: 57px;
-        height: 59px;
-    }
 
-    .category-icon{
-        font-size: 20px;
-        color: #fff;
-        width: 50px;
-        height: 50px;
-        display: table-cell;
-        border-radius: 50%;
-        vertical-align: middle;
-    }
+
 </style>
 
 <script>

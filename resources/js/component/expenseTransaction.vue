@@ -6,9 +6,9 @@
                 <span style="font-size: 10px;">Updated As on 07 july 2021</span>
             </p>
             <!-- <button class="button is-rounded" v-on:click="addExpenseModal = true">+</button> -->
-          <!--   <router-link  class="navbar-item" to="/expense/add">
-                Expense add
-            </router-link> -->
+            <router-link  class="navbar-item" to="/expense/add">
+                Add
+            </router-link>
             <!-- <span class="icon">
                 <i class="fas fa-utensils"></i>
               </span> -->

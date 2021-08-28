@@ -1,9 +1,9 @@
 <template>
-    <div class="categories" style="text-aling:center">
+    <div class="categories icon.vue">
         <div class="category-icon"
             v-bind:style="{background: category.color}"
             >
-                <i v-if="category.icon_type == 'fontawesome'" v-bind:class="category.class_or_path" class="category-icon" style="margin-left: 5px;"></i>
+                <i v-if="category.icon_type == 'fontawesome'" v-bind:class="category.class_or_path"></i>
                 <span v-if="category.icon_type == 'character'" v-text="category.name.charAt(0)"></span>
         </div>
         <p v-if="text == 'show'" v-text="category.name"></p>
@@ -11,10 +11,12 @@
 </template>
 <style>
     .categories {
-        text-align: center;
-        /*margin-left: 5px;*/
-        cursor: pointer;
         margin-bottom: 5px;
+        text-align: center;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 
     .is-selected {
@@ -28,9 +30,11 @@
         color: #fff;
         width: 50px;
         height: 50px;
-        display: table-cell;
         border-radius: 50%;
-        vertical-align: middle;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
     }
 </style>
 
