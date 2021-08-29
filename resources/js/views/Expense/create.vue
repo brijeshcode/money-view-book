@@ -1,7 +1,9 @@
 <template>
 	<div class="container">
 		<div class="columns">
-			<div class="column ">
+			<div class="column is-3">
+			</div>
+			<div class="column is-6">
 				 <add-expense></add-expense>
 			</div>
 		</div>

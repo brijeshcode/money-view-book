@@ -9,11 +9,6 @@
     </div>
     </div>
 </template>
-<style>
-
-
-
-</style>
 
 <script>
 import expenseIcon from '../common-components/icon.vue';

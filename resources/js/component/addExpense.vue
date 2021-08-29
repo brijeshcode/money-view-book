@@ -103,7 +103,8 @@
             onSubmti() {
                 this.loadAll = true;
                 this.form.post("/expense").then((expense) => this.$emit("completed", expense));
-                Categories.recent(category => this.categories = category);
+                this.$router.push("/expense");
+                // Categories.recent(category => this.categories = category);
             },
 
 			categorySelected(category){

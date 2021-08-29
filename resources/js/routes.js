@@ -20,7 +20,6 @@ let routes = [
 
 	    },
 	},
-
 	{
 		path: '/expense',
 		component: require('./views/Expense').default,

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Expense;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\DB;
 class ExpensesController extends Controller
 {
 
@@ -15,7 +15,7 @@ class ExpensesController extends Controller
                 ->orderBy('date', 'desc')
                 ->orderBy('id', 'desc')
                 // ->get();
-                ->paginate(10);
+                ->paginate(20);
     }
 
 
@@ -48,17 +48,21 @@ class ExpensesController extends Controller
     }
 
 
-    public function show(Expense $expense)
+    public function expenseReport()
     {
-        //
+        $year = date('Y');
+        $month = date('m');
+        $total = $this->expenseTotal();
+        $expenseReport = Expense::with('category:id,name,class_or_path,color,icon_type')
+                    ->whereMonth('date', $month)
+                    ->whereYear('date', $year)
+                    ->select('category_id' , DB::raw("sum(amount) as amount , CONCAT(round((sum(amount) / $total) * 100, 2), ' %') percent_string,   round((sum(amount) / $total) * 100, 2) as percent "))
+                    ->groupBy('category_id')
+                    ->orderBy('percent' , 'desc')
+                    ->get();
+        return $expenseReport;
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Expense  $expense
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Expense $expense)
     {
         //

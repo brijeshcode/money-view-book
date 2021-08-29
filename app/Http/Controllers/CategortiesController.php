@@ -7,11 +7,6 @@ use Illuminate\Http\Request;
 
 class CategortiesController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         return  Category::orderBy('name')->get();
@@ -26,15 +21,9 @@ class CategortiesController extends Controller
 
     public function latestUsed()
     {
-        return $expenses = Category::where('type', 'expense')
-                    ->orderBy('name', 'asc')->limit(7)->get();
+        return Category::where('type', 'expense')->orderBy('name', 'asc')->limit(12)->get();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create(Request $request)
     {
         $this->validate($request,[
@@ -48,7 +37,6 @@ class CategortiesController extends Controller
         $category = Category::create($request->all());
 
         return $category;
-
     }
 
     /**

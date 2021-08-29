@@ -15,6 +15,12 @@ class Expense{
 			.then(response => then(response.data))
 		;
 	}
+
+	static currentMonthReport(then){
+		return axios.get('/report/monthly-expense')
+			.then(response => then(response.data))
+		;
+	}
 }
 
 export default Expense;

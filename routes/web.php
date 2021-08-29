@@ -23,6 +23,8 @@ Route::get('/', function () {
 Route::post('expense', [ExpensesController::class, 'store']);
 Route::get('expense', [ExpensesController::class, 'index']);
 Route::get('expense-total', [ExpensesController::class, 'expenseTotal']);
+Route::get('report/monthly-expense', [ExpensesController::class, 'expenseReport']);
+
 
 // Route::get('expense/categories/create', [CategortiesController::class, 'create']);
 
