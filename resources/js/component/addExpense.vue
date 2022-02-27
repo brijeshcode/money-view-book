@@ -3,44 +3,62 @@
         <div class="column">
             <div class="box">
                 <h2 class="title">Add</h2>
-                <form @submit.prevent="onSubmti" @keydown="form.errors.clear()">
+                <form @submit.prevent="onSubmti" @keydown="form.errors.clear($event.target.name)">
 
-                    <div class="field">
-                        <div>Amount*</div>
-                        <div class="control has-icons-left">
-                            <input class="input" type="number" placeholder="Enter Amount" v-model="form.amount" />
-                            <span class="icon is-small is-left">
-                                <i class="fas fa-rupee-sign"></i>
-                            </span>
-                        </div>
-                        <!-- <error></error> -->
-                        <spam class="help is-danger" v-if="form.errors.has('amount')" v-text="form.errors.get('amount')"></spam>
-                    </div>
+                    <!-- <f-form-radio
+                    :radios="radios"
+                    label="Select Your Gender"
+                    name="radiortesr"
+                    v-model="form.radio"
+                    ></f-form-radio> -->
 
-                    <div class="field">
-                        <div>Title*</div>
-                        <div class="control has-icons-left">
-                            <input class="input" type="text" placeholder="Title" v-model="form.transaction_title" />
-                            <span class="icon is-small is-left">
-                                <i class="fas fa-store-alt"></i>
-                            </span>
-                        </div>
-                        <!-- <error></error> -->
-                        <spam class="help is-danger" v-if="form.errors.has('transaction_title')" v-text="form.errors.get('transaction_title')"></spam>
-                    </div>
 
-                    <div class="field">
-                        <div>Date*</div>
-                        <div class="control has-icons-left">
-                            <input class="input" type="date" placeholder="Date" v-model="form.date" />
+                    <!-- <f-form-checkbox
+                        label="Checkbox"
+                        v-model="form.transaction_title"
+                        checkedVal="new"
+                        unCheckedVal="falsevalue"
+                    ></f-form-checkbox> -->
 
-                            <span class="icon is-small is-left">
-                                <i class="fas fa-calendar-alt"></i>
-                            </span>
-                        </div>
-                        <spam class="help is-danger" v-if="form.errors.has('date')" v-text="form.errors.get('date')"></spam>
+                    <!-- <f-form-checkbox
+                        label="Checkbox"
+                        v-model="form.transaction_title"
+                        checkedVal="other"
+                        false="you"
+                    ></f-form-checkbox> -->
 
-                    </div>
+                    <f-field-input
+                        type="text"
+                        placeholder="Enter Amount"
+                        label="Amount*"
+                        name="amount"
+                        icon="fas fa-rupee-sign"
+                        v-model="form.amount"
+                        v-bind:error="form.errors.has('amount')"
+                        v-bind:errmsg="form.errors.get('amount')"
+                    ></f-field-input>
+
+                    <f-field-input
+                        type="text"
+                        placeholder="Enter Title"
+                        v-model="form.transaction_title"
+                        label="Title*"
+                        name="transaction_title"
+                        icon="fas fa-rupee-sign"
+                        v-bind:error="form.errors.has('transaction_title')"
+                        v-bind:errmsg="form.errors.get('transaction_title')"
+                    ></f-field-input>
+
+                    <f-field-input
+                        type="date"
+                        placeholder="Enter Date"
+                        v-model="form.date"
+                        label="Date*"
+                        name="date"
+                        icon="fas fa-calendar-alt"
+                        v-bind:error="form.errors.has('date')"
+                        v-bind:errmsg="form.errors.get('date')"
+                    ></f-field-input>
 
                     <div class="field">
                         <div style="margin-bottom:20px;">Category* <span v-if="loadAll" v-on:click="laodAllCategories()">All Categories</span></div>
@@ -56,11 +74,9 @@
                                 >
                                     <i v-if="category.icon_type == 'fontawesome'" v-bind:class="category.class_or_path"></i>
                                     <span v-if="category.icon_type == 'character'" v-text="category.name.charAt(0)"></span>
-
                                 </div>
                                 <p v-text="category.name"></p>
                             </div>
-
                         </div>
                     </div>
 
@@ -79,6 +95,8 @@
     import faIcons from '../utilities/icons';
     import colors from '../utilities/colors';
     import Categories from '../Models/Category';
+    import formComponentsLoader from '../common-components/form/loader';
+
     export default {
         data() {
             return {
@@ -86,25 +104,41 @@
                 activeIcon: "",
                 loadAll: true,
                 form: new Form({
-                    transaction_title: "",
-                    date: "",
-                    transaction_type: "",
                     amount: "",
+                    select: "",
+                    radio: "",
+                    transaction_title: "falsevalue",
+                    transaction_type: "",
+                    date: new Date().toISOString().substr(0, 10),
                     category_id: "",
                     updated_by: "",
-                    added_by: "",
+                    added_by: ""
                 }),
+                some: []
             };
         },
         created(){
+            // this.form.date = "";
             Categories.recent(category => this.categories = category);
+            this.some= [
+                {edit: false},
+                {edit: false},
+                {edit: false},
+                {edit: true},
+                {edit: true},
+            ];
         },
         methods: {
             onSubmti() {
+                console.log('submitted');
+                console.log(this.form.transaction_title);
                 this.loadAll = true;
                 this.form.post("/expense").then((expense) => this.$emit("completed", expense));
-                this.$router.push("/expense");
-                // Categories.recent(category => this.categories = category);
+                // this.$router.push("/expense");
+            },
+            changesome(index){
+                this.some[index].edit = !this.some[index].edit;
+                // console.log(this.some[index].edit);
             },
 
 			categorySelected(category){
@@ -116,9 +150,7 @@
 
             laodAllCategories(){
                 this.loadAll = false;
-
                 Categories.all(category => this.categories = category);
-
             }
         },
     };

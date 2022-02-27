@@ -71,7 +71,6 @@
 }
 </style>
 
-
 <script>
 import faIcons from '../utilities/icons';
 
@@ -82,5 +81,5 @@ import faIcons from '../utilities/icons';
 				iconPlain: faIcons[1]
 			};
 		}
-	}
+	};
 </script>

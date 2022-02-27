@@ -3,7 +3,7 @@
         <div class="message-header">
             <p>
                 Category<br />
-                <span style="font-size: 10px;">Aug 2021</span>
+                <span style="font-size: 10px;">{{ currentMonth }}</span>
             </p>
         </div>
         <div class="message-body transaction-body">
@@ -42,21 +42,28 @@ import Expenses from '../Models/Expense';
 
         data(){
             return {
+                found : 'no not found',
                 expenses: [],
-                page : 1
+                page : 1,
+                currentMonth: new Date().toLocaleDateString("en-US", {year: 'numeric', month: 'long'}).substr(0, 18),
             }
         },
         created(){
-            Expenses.currentMonthReport(expenses => this.expenses = expenses );
+
+            Expenses.currentMonthReport(expenses =>  this.expenses = expenses );
+            // Expenses.currentMonthReport(expenses => { expenses.length > 0 ? this.expenses = expenses : console.log('no data found')});
+            // Expenses.currentMonthReport(expenses => { expenses.length > 0 ? this.found = expenses : this.found = 'no' ; });
             // Expenses.currentMonthReport(expenses => console.log( expenses));
-            console.log(this.expenses);
+            // console.log(this.expenses);
         },
 
         methods:{
-            /*laodMore(){
-                this.page = this.page + 1;
-                Expenses.all(expenses => this.expenses = expenses.data, this.page);
-            }*/
+            laodMore(){
+                // console.log(this.found);
+                /*this.page = this.page + 1;
+                Expenses.all(expenses => this.expenses = expenses.data, this.page);*/
+
+            }
         }
     };
 </script>

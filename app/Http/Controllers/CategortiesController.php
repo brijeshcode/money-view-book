@@ -9,8 +9,7 @@ class CategortiesController extends Controller
 {
     public function index()
     {
-        return  Category::orderBy('name')->get();
-
+        return Category::orderBy('name')->get();
     }
 
     public function expense($value='')

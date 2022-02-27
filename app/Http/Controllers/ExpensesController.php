@@ -7,15 +7,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 class ExpensesController extends Controller
 {
-
-
     public function index()
     {
         return  Expense::with('category:id,name,icon_type,color,class_or_path')
                 ->orderBy('date', 'desc')
                 ->orderBy('id', 'desc')
                 // ->get();
-                ->paginate(20);
+                ->paginate(10);
     }
 
 
@@ -41,8 +39,8 @@ class ExpensesController extends Controller
 
     public function expenseTotal()
     {
-        $month = date('m');
         $year = date('Y');
+        $month = date('m');
         return Expense::whereMonth('date', $month)->whereYear('date', $year)->sum('amount');
         // return  Expense::whereMonth('date', $month)->get();
     }
@@ -52,6 +50,7 @@ class ExpensesController extends Controller
     {
         $year = date('Y');
         $month = date('m');
+        // $month = date(8);
         $total = $this->expenseTotal();
         $expenseReport = Expense::with('category:id,name,class_or_path,color,icon_type')
                     ->whereMonth('date', $month)

@@ -15,7 +15,6 @@ import expenseIcon from '../common-components/icon.vue';
     export default{
         components: {
             'expense-icon': expenseIcon,
-
         },
         props: ['categories', 'text' ],
 

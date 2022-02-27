@@ -3,16 +3,12 @@
         <div class="message-header">
             <p>
                 Latest Transactions<br />
-                <span style="font-size: 10px;">Updated As on 07 july 2021</span>
+                <span style="font-size: 10px;">Updated As on {{ lastTranstionDate }}</span>
             </p>
-            <!-- <button class="button is-rounded" v-on:click="addExpenseModal = true">+</button> -->
             <router-link  class="navbar-item" to="/expense/add">
                 Add
             </router-link>
-            <!-- <span class="icon">
-                <i class="fas fa-utensils"></i>
-              </span> -->
-            <!-- <i class="fas fa-ellipsis-v"></i> -->
+
         </div>
         <div class="message-body transaction-body">
             <ul>
@@ -34,15 +30,25 @@
                             <i class="fas fa-2x fa-rupee-sign"></i>
                         </span>
                         <span class="amount" v-text="expense.amount"></span>
-                        <p class="date" v-text="expense.date">07 July</p>
+                        <p class="date" v-text="addedOn(expense.date)"></p>
                     </div>
                 </li>
             </ul>
-            <div v-on:click="laodMore()">Load more</div>
+            <div class="simplePagionation">
+                <div v-on:click="next()">Next</div>
+                <div v-if="showPervous" v-on:click="previous()">Back</div>
+            </div>
         </div>
     </article>
 </template>
 <style type="text/css">
+    .simplePagionation{
+        display: flex;
+        justify-content: space-between;
+    }
+    .simplePagionation div{
+        cursor: pointer;
+    }
     .icon-img {
         text-align: center;
         border-radius: 58%;
@@ -96,6 +102,7 @@
     }
 </style>
 <script>
+import moment from 'moment';
 import categoryIcons from '../common-components/icon.vue';
 import Expenses from '../Models/Expense';
     export default{
@@ -106,7 +113,10 @@ import Expenses from '../Models/Expense';
         data(){
             return {
                 expenses: [],
-                page : 1
+                page : 1,
+                showPervous: false,
+                hideNext: false,
+                lastTranstionDate: new Date().toLocaleDateString("hi-IN", {year: 'numeric', month: 'long', day: 'numeric'}).substr(0, 18),
             }
         },
         created(){
@@ -114,11 +124,18 @@ import Expenses from '../Models/Expense';
         },
 
         methods:{
-            laodMore(){
+            addedOn(date){
+                return moment(date).format('DD MMM');
+            },
+            next(){
                 this.page = this.page + 1;
                 Expenses.all(expenses => this.expenses = expenses.data, this.page);
-
-
+                this.showPervous  = this.page <= 1 ? false: true;
+            },
+            previous(){
+                this.page = this.page - 1;
+                Expenses.all(expenses => this.expenses = expenses.data, this.page);
+                this.showPervous  = this.page <= 1 ? false: true;
             }
         }
     };

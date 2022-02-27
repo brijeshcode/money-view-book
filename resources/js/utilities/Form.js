@@ -99,7 +99,6 @@ class Form {
                 })
                 .catch(error => {
                     this.onFail(error.response.data.errors);
-
                     reject(error.response.data);
                 });
         });
